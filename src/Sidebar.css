@@ -11,6 +11,10 @@
   border-right: 1px solid ligtgray;
 }
 
+.sidebar__header > h4 {
+  margin-right: auto;
+}
+
 .sidebar__headerRight {
   display: flex;
   align-items: center;
