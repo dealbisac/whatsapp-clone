@@ -7,6 +7,18 @@ import { Link } from 'react-router-dom';
 
 function SidebarChat({ id, name, addNewChat }) {
     const [seed, setSeed] = useState('');
+    const [messages, setMessages] = useState('');
+
+    useEffect(() => {
+        if (id) {
+            db.collection('rooms').doc(id)
+                .collection('messages').orderBy('timestamp', 'desc')
+                .onSnapshot((snapshot) =>
+                    setMessages(snapshot.docs.map((doc) =>
+                        doc.data()))
+                );
+        }
+    })
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 3790));
@@ -29,7 +41,7 @@ function SidebarChat({ id, name, addNewChat }) {
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg `} />
                 <div className="sidebarChat__info">
                     <h4>{name}</h4>
-                    <p>Last Message</p>
+                    <p>{messages[0]?.message}</p>
                 </div>
             </div >
         </Link>
